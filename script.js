@@ -2,7 +2,7 @@ const sidebar = document.getElementById("sidebar");
 const overlay = document.getElementById("overlay");
 const menuToggle = document.getElementById("menuToggle");
 const printBtn = document.getElementById("btnPrint");
-const navLinks = document.querySelectorAll(".nav a");
+const navLinks = document.querySelectorAll(".binder-nav a");
 const sections = [...document.querySelectorAll("main section[id]")];
 
 function setMenu(open) {
@@ -19,7 +19,18 @@ menuToggle.addEventListener("click", () => {
 overlay.addEventListener("click", () => setMenu(false));
 
 navLinks.forEach((link) => {
-  link.addEventListener("click", () => setMenu(false));
+  link.addEventListener("click", (event) => {
+    const id = link.getAttribute("href");
+    const target = id ? document.querySelector(id) : null;
+
+    if (target) {
+      event.preventDefault();
+      target.scrollIntoView({ behavior: "smooth", block: "start" });
+      history.pushState(null, "", id);
+    }
+
+    setMenu(false);
+  });
 });
 
 printBtn.addEventListener("click", () => window.print());

@@ -66,9 +66,9 @@ a:hover {
 
 .page {
   display: grid;
-  grid-template-columns: 340px 1fr;
+  grid-template-columns: 340px 1fr 58px;
   min-height: 100vh;
-  max-width: 1320px;
+  max-width: 1380px;
   margin: 0 auto;
 }
 
@@ -279,67 +279,74 @@ a:hover {
 }
 
 .main {
-  padding: 36px 56px 72px;
-}
-
-.topbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 28px;
-  position: sticky;
-  top: 0;
-  z-index: 8;
-  background: color-mix(in srgb, var(--paper) 88%, transparent);
-  backdrop-filter: blur(12px);
-  padding: 10px 0 14px;
+  padding: 18px 36px 72px 48px;
 }
 
 .menu-toggle {
   display: none;
   width: 42px;
   height: 42px;
-  border: 1px solid var(--line);
-  background: var(--paper-2);
+  border: 1px solid rgba(196, 163, 90, 0.35);
+  background: var(--sidebar);
   border-radius: 10px;
   cursor: pointer;
+  flex-shrink: 0;
 }
 
 .menu-toggle span {
   display: block;
   width: 18px;
   height: 1.5px;
-  background: var(--ink);
+  background: var(--gold);
   margin: 4px auto;
 }
 
-.nav {
+.binder-nav {
+  position: sticky;
+  top: 28px;
+  align-self: start;
+  z-index: 9;
   display: flex;
-  gap: 22px;
-  margin-left: auto;
+  flex-direction: column;
+  gap: 8px;
+  padding: 4px 0 12px;
 }
 
-.nav a {
-  font-size: 13px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--muted);
+.binder-nav a {
   position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 112px;
+  padding: 18px 11px;
+  background: var(--sidebar);
+  color: #ece7dc;
+  border: 1px solid rgba(196, 163, 90, 0.28);
+  border-radius: 14px 0 0 14px;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  transform: rotate(180deg);
+  box-shadow: -8px 8px 20px rgba(18, 22, 30, 0.14);
+  transition: color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, padding 0.2s ease;
 }
 
-.nav a.active,
-.nav a:hover {
-  color: var(--ink);
+.binder-nav a:hover {
+  color: var(--gold);
+  border-color: rgba(196, 163, 90, 0.55);
 }
 
-.nav a.active::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: -6px;
-  height: 1px;
-  background: var(--gold);
+.binder-nav a.active {
+  color: var(--gold);
+  border-color: rgba(196, 163, 90, 0.55);
+  box-shadow:
+    inset 0 -3px 0 var(--gold),
+    -10px 8px 22px rgba(18, 22, 30, 0.2);
+  padding-left: 14px;
+  padding-right: 14px;
 }
 
 .hero h2,
@@ -350,7 +357,7 @@ a:hover {
 }
 
 .eyebrow {
-  margin: 0 0 10px;
+  margin: 0 0 8px;
   font-size: 12px;
   letter-spacing: 0.2em;
   text-transform: uppercase;
@@ -358,10 +365,11 @@ a:hover {
 }
 
 .hero h2 {
-  margin: 0 0 22px;
-  font-size: clamp(32px, 4.4vw, 52px);
-  line-height: 1.12;
-  max-width: 16ch;
+  margin: 0 0 16px;
+  font-size: clamp(18px, 2.05vw, 30px);
+  line-height: 1.2;
+  max-width: none;
+  white-space: nowrap;
 }
 
 .lead {
@@ -397,6 +405,15 @@ a:hover {
 
 .section {
   margin-top: 64px;
+  scroll-margin-top: 20px;
+}
+
+.hero {
+  scroll-margin-top: 20px;
+}
+
+#destaques {
+  min-height: calc(100svh - 28px);
 }
 
 .section-head {
@@ -589,27 +606,66 @@ a:hover {
     transform: none;
   }
 
+  .main {
+    padding: 12px 20px 56px;
+    order: 2;
+  }
+
   .menu-toggle {
     display: block;
   }
 
-  .main {
-    padding: 20px 20px 56px;
+  .binder-nav {
+    order: 1;
+    position: sticky;
+    top: 0;
+    z-index: 8;
+    flex-direction: row;
+    align-items: stretch;
+    gap: 6px;
+    padding: 10px 16px 12px;
+    overflow-x: auto;
+    background: color-mix(in srgb, var(--paper) 92%, transparent);
+    backdrop-filter: blur(12px);
+  }
+
+  .binder-nav a {
+    writing-mode: horizontal-tb;
+    text-orientation: mixed;
+    transform: none;
+    min-height: 0;
+    width: auto;
+    padding: 10px 14px;
+    border-radius: 0 0 12px 12px;
+    border: 1px solid rgba(196, 163, 90, 0.28);
+    border-top: 0;
+    white-space: nowrap;
+    box-shadow: 0 8px 16px rgba(18, 22, 30, 0.1);
+  }
+
+  .binder-nav a.active {
+    padding-left: 14px;
+    padding-right: 14px;
+    box-shadow:
+      inset 0 3px 0 var(--gold),
+      0 8px 16px rgba(18, 22, 30, 0.12);
+  }
+
+  .hero,
+  .section {
+    scroll-margin-top: 68px;
   }
 
   .hero h2 {
     max-width: none;
+    white-space: normal;
+    font-size: clamp(26px, 6vw, 36px);
   }
 
   .stats,
   .edu-grid,
   .highlight-grid {
     grid-template-columns: 1fr;
-  }
-
-  .nav {
-    gap: 14px;
-    overflow: auto;
   }
 }
 
@@ -618,7 +674,7 @@ a:hover {
     background: #fff;
   }
 
-  .topbar,
+  .binder-nav,
   .sidebar-actions,
   .overlay,
   .menu-toggle,
@@ -653,6 +709,15 @@ a:hover {
 
   .main {
     padding: 0;
+  }
+
+  #destaques {
+    min-height: 0;
+  }
+
+  .hero h2 {
+    white-space: nowrap;
+    font-size: 22px;
   }
 
   .company,
